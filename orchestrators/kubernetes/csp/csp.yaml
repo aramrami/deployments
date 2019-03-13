@@ -26,7 +26,7 @@ spec:
       serviceAccount: aqua      
       containers:
       - name: aqua-gateway
-        image: registry.aquasec.com/gateway:4.0
+        image: registry.aquasec.com/gateway:4.0.rc9
         env:
           - name: SCALOCK_GATEWAY_PUBLIC_IP
             value: aqua-gateway
@@ -117,7 +117,7 @@ spec:
       serviceAccount: aqua
       containers:
       - name: aqua-web
-        image: registry.aquasec.com/console:4.0
+        image: registry.aquasec.com/console:4.0.rc9
         env:
           - name: SCALOCK_DBUSER
             value: "postgres"
