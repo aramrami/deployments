@@ -23,60 +23,28 @@ spec:
         app: aqua-gateway
       name: aqua-gateway
     spec:
-      serviceAccount: aqua      
+      serviceAccount: aqua
       containers:
       - name: aqua-gateway
-        image: registry.aquasec.com/gateway:4.0.rc9
+        image: registry.aquasec.com/gateway:4.0
         env:
           - name: SCALOCK_GATEWAY_PUBLIC_IP
             value: aqua-gateway
           - name: SCALOCK_DBUSER
             value: "postgres"
           - name: SCALOCK_DBPASSWORD
-            valueFrom: 
+            valueFrom:
               secretKeyRef:
                 name: aqua-db
                 key: password
-          - name: SCALOCK_DBNAME
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_name
-          - name: SCALOCK_DBHOST
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_host
-          - name: SCALOCK_DBPORT
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_port
-          - name: SCALOCK_AUDIT_DBUSER
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_user
           - name: SCALOCK_AUDIT_DBPASSWORD
-            valueFrom: 
+            valueFrom:
               secretKeyRef:
                 name: aqua-db
                 key: password
-          - name: SCALOCK_AUDIT_DBNAME
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_name
-          - name: SCALOCK_AUDIT_DBHOST
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_host
-          - name: SCALOCK_AUDIT_DBPORT
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_port
+        envFrom:
+        - configMapRef:
+            name: postgres-connection-details
         ports:
         - containerPort: 3622
 ---
@@ -100,7 +68,7 @@ spec:
 
   selector:
     app: aqua-web
-  type: LoadBalancer    
+  type: LoadBalancer
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -117,55 +85,24 @@ spec:
       serviceAccount: aqua
       containers:
       - name: aqua-web
-        image: registry.aquasec.com/console:4.0.rc9
+        image: registry.aquasec.com/console:4.0
         env:
-          - name: SCALOCK_DBUSER
-            value: "postgres"
           - name: SCALOCK_DBPASSWORD
             valueFrom:
               secretKeyRef:
                 name: aqua-db
                 key: password
-          - name: SCALOCK_DBNAME
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_name
-          - name: SCALOCK_DBHOST
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_host
-          - name: SCALOCK_DBPORT
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: db_port
-          - name: SCALOCK_AUDIT_DBUSER
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_user
           - name: SCALOCK_AUDIT_DBPASSWORD
-            valueFrom: 
+            valueFrom:
               secretKeyRef:
                 name: aqua-db
                 key: password
-          - name: SCALOCK_AUDIT_DBNAME
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_name
-          - name: SCALOCK_AUDIT_DBHOST
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_host
-          - name: SCALOCK_AUDIT_DBPORT
-            valueFrom:
-              configMapKeyRef:              
-                name: postgres-connection-details
-                key: audit_db_port
+        envFrom:
+        - configMapRef:
+            name: postgres-connection-details
+        ports:
+        - containerPort: 3622
+
         volumeMounts:
           - mountPath: /var/run/docker.sock
             name: docker-socket-mount
