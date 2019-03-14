@@ -17,10 +17,10 @@ spec:
         args: ["daemon", "--user", "<SCANNER_USER>", "--password", "$(SCANNER_PASSWORD)", "--host", "http://aqua-web:8080"]
         env:
         - name: SCALOCK_PASSWORD
-            valueFrom: 
-              secretKeyRef:
-                name: scanner-password
-                key: password		    
+          valueFrom: 
+            secretKeyRef:
+              name: scanner-password
+              key: password		    
         volumeMounts:
           - mountPath: /var/run/docker.sock
             name: docker-socket-mount
@@ -30,3 +30,5 @@ spec:
         - name: docker-socket-mount
           hostPath:
             path: /var/run/docker.sock
+
+		
