@@ -1,14 +1,14 @@
-apiVersion: v1 
-kind: ConfigMap 
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: postgres-connection-details 
+  name: postgres-connection-details
   namespace: aqua-security
 data:
-  db_host: "aqua-db"
-  db_port: "5432"
-  db_name: "scalock"
-  db_user: "postgres"
-  audit_db_host: "aqua-db" 
-  audit_db_port: "5432" 
-  audit_db_name: "slk_audit" 
-  audit_db_user: "postgres" 
+  SCALOCK_DBHOST: "aqua-db"
+  SCALOCK_DBPORT: "5432"
+  SCALOCK_DBNAME: "scalock"
+  SCALOCK_DBUSER: "postgres"
+  SCALOCK_AUDIT_DBHOST: "aqua-db"
+  SCALOCK_AUDIT_DBPORT: "5432"
+  SCALOCK_AUDIT_DBNAME: "slk_audit"
+  SCALOCK_AUDIT_DBUSER: "postgres"
