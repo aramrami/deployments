@@ -60,7 +60,7 @@ spec:
       serviceAccount: aqua
       containers:
       - name: aqua-db
-        image: registry.aquasec.com/database:4.0.rc9
+        image: registry.aquasec.com/database:4.0
         env:
           - name: POSTGRES_PASSWORD
             valueFrom:
